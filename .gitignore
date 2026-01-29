@@ -22,3 +22,16 @@ Thumbs.db
 
 # misc
 *.local
+
+# .NET
+**/bin/
+**/obj/
+**/TestResults/
+*.user
+*.suo
+
+# publish output (if generated locally)
+**/publish/
+
+# sitef-bridge logs
+sitef-bridge/bridge.log
