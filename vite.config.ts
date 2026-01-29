@@ -1,12 +1,16 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ command }) => ({
-  // For GitHub Pages project site, assets must be served from /<repo>/.
-  // Keep local dev at '/' and only change base when building.
-  base: command === 'build' ? '/gobigger/' : '/',
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  // Default '/' for Vercel/Netlify/etc.
+  // For GitHub Pages project site, set VITE_BASE=/gobigger/ during build.
+  const base = env.VITE_BASE || '/';
+
+  return {
+    base,
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
@@ -19,4 +23,5 @@ export default defineConfig(({ command }) => ({
       '@': path.resolve(__dirname, './src'),
     },
   },
-}))
+  };
+})
